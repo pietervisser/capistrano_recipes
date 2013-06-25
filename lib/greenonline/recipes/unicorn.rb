@@ -26,13 +26,15 @@ module Capistrano
       after "deploy:setup", "unicorn:setup"
 
       namespace :server do
-        %w(start stop restart).each do |command|
+        %w(start stop restart upgrade).each do |command|
           desc "#{command} unicorn"
           task command, roles: :web do
             run "service unicorn_#{application.downcase} #{command}"
           end
-          after "deploy:#{command}", "unicorn:server:#{command}"
         end
+        after "deploy:restart", "unicorn:server:upgrade"
+        after "deploy:stop", "unicorn:server:stop"
+        after "deploy:start", "unicorn:server:start"
       end
 
     end
