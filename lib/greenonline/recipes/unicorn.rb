@@ -2,8 +2,8 @@ module Capistrano
   Configuration.instance(true).load do
     set_default(:unicorn_user)    { user }
     set_default(:unicorn_pid)     { "#{current_path}/tmp/pids/unicorn.pid" }
-    set_default(:unicorn_config)  { "#{current_release}/config/unicorn.rb" }
-    set_default(:unicorn_log)     { "#{shared_path}/log/unicorn.log" }
+    set_default(:unicorn_config)  { "#{current_path}/config/unicorn.rb" }
+    set_default(:unicorn_log)     { "#{current_path}/log/unicorn.log" }
     set_default(:unicorn_workers) { 2 }
 
 
@@ -16,7 +16,6 @@ module Capistrano
 
       desc "Setup Unicorn initializer and app configuration"
       task :setup, roles: :app do
-        run "mkdir -p #{shared_path}/config"
         template "unicorn_init.erb", "/tmp/unicorn_init"
         run "chmod +x /tmp/unicorn_init"
         surun "mv /tmp/unicorn_init /etc/init.d/unicorn_#{application.downcase}"
