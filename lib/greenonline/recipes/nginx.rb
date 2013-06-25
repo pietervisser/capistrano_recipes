@@ -1,5 +1,7 @@
 module Capistrano
   Configuration.instance(true).load do
+    set_default(:nginx_server_name, nil)
+
     namespace :nginx do
       desc "update latest nginx configuration"
       task :update_config, roles: :web do

@@ -4,6 +4,9 @@ upstream unicorn {
 
 server {
   listen 80 default;
+  <% if nginx_server_name %>
+  server_name <%= nginx_server_name %>;
+  <% end  %>
   root <%= current_path %>/public;
 
   location ^~ /assets/ {
