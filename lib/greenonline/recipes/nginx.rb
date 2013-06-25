@@ -3,7 +3,7 @@ module Capistrano
     namespace :nginx do
       desc "update latest nginx configuration"
       task :update_config, roles: :web do
-        template 'nginx_unicorn.erb', File.join(current_path, '/config/nginx.conf')
+        template 'nginx_unicorn.erb', File.join(current_release, '/config/nginx.conf')
       end
       after "deploy:update_code", "nginx:update_config"
 

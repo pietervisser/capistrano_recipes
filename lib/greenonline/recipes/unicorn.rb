@@ -10,7 +10,7 @@ module Capistrano
     namespace :unicorn do
       desc "update latest unicorn configuration"
       task :update_config, roles: :web do
-        template 'unicorn.rb.erb', File.join(current_path, '/config/unicorn.rb')
+        template 'unicorn.rb.erb', File.join(current_release, '/config/unicorn.rb')
       end
       after "deploy:update_code", "unicorn:update_config"
 
