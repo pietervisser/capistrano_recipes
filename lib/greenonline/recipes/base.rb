@@ -20,5 +20,9 @@ module Capistrano
         end
       end
     end
+
+    set_default(:bundle_flags) { "--deployment --quiet --binstubs" }
+    set_default(:bundle_cmd)   { "#{current_release}/bin/bundle" }
+
   end
 end

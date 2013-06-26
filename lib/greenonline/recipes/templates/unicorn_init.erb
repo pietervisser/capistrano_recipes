@@ -14,7 +14,9 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=<%= current_path %>
 PID=<%= unicorn_pid %>
-CMD="cd <%= current_path %>; bundle exec unicorn -D -c <%= unicorn_config %> -E production"
+RBENV_ROOT="/usr/local/rbenv"
+PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
+CMD="<%= current_path %>/bin/unicorn -D -c <%= unicorn_config %> -E production"
 AS_USER=<%= unicorn_user %>
 set -u
 
