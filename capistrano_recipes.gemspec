@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'greenonline/capistrano_recipes/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "capistrano_recipes"
+  spec.name          = "greenonline_capistrano_recipes"
   spec.version       = Greenonline::CapistranoRecipes::VERSION
   spec.authors       = ["Pieter Visser"]
   spec.email         = ["pieter@greenonline.nl"]
