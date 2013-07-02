@@ -5,6 +5,7 @@ module Capistrano
     set_default(:unicorn_config)  { "#{current_path}/config/unicorn.rb" }
     set_default(:unicorn_config_write)  { "#{current_release}/config/unicorn.rb" }
     set_default(:unicorn_log)     { "#{current_path}/log/unicorn.log" }
+    set_default(:unicorn_dependencies) { "" }
     set_default(:unicorn_workers) { 2 }
 
 
