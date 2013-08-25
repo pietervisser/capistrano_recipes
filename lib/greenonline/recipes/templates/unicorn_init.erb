@@ -16,7 +16,7 @@ APP_ROOT=<%= current_path %>
 PID=<%= unicorn_pid %>
 RBENV_ROOT="/usr/local/rbenv"
 PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
-CMD="<%= current_path %>/bin/unicorn -D -c <%= unicorn_config %> -E production"
+CMD="<%= current_path %>/bin/unicorn -D -c <%= unicorn_config %> -E <%= stage %>"
 AS_USER=<%= unicorn_user %>
 set -u
 
