@@ -1,10 +1,10 @@
-upstream unicorn {
+upstream unicorn_<%= application.downcase %>_<%= stage %> {
   # fail_timeout=0 means we always retry an upstream even if it failed
   # to return a good HTTP response (in case the Unicorn master nukes a
   # single worker for timing out).
 
   # for UNIX domain socket setups:
-  server unix:/tmp/unicorn.<%= application.downcase %>.sock fail_timeout=0;
+  server unix:/tmp/unicorn.<%= application.downcase %>.<%= stage %>.sock fail_timeout=0;
 }
 
 server {
@@ -44,7 +44,7 @@ server {
     # redirects, we set the Host: header above already.
     proxy_redirect off;
 
-    proxy_pass http://unicorn;
+    proxy_pass http://unicorn_<%= application.downcase %>_<%= stage %>;
   }
 
   error_page 500 502 503 504 /500.html;

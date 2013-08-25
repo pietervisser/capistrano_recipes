@@ -20,9 +20,9 @@ module Capistrano
       task :setup, roles: :app do
         template "unicorn_init.erb", "/tmp/unicorn_init"
         run "chmod +x /tmp/unicorn_init"
-        surun "mv /tmp/unicorn_init /etc/init.d/unicorn_#{application.downcase}"
-        surun "chkconfig --add unicorn_#{application.downcase}"
-        surun "chkconfig unicorn_#{application.downcase} on"
+        surun "mv /tmp/unicorn_init /etc/init.d/unicorn_#{application.downcase}_#{stage}"
+        surun "chkconfig --add unicorn_#{application.downcase}_#{stage}"
+        surun "chkconfig unicorn_#{application.downcase}_#{stage} on"
       end
       after "deploy:setup", "unicorn:setup"
 
@@ -30,7 +30,7 @@ module Capistrano
         %w(start stop restart upgrade).each do |command|
           desc "#{command} unicorn"
           task command, roles: :web do
-            run "service unicorn_#{application.downcase} #{command}"
+            run "service unicorn_#{application.downcase}_#{stage} #{command}"
           end
         end
         after "deploy:restart", "unicorn:server:upgrade"

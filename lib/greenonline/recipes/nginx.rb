@@ -11,7 +11,7 @@ module Capistrano
 
       desc "setup nginx for this application, adding it to sites-enabled"
       task :setup, roles: :web do
-        surun "ln -nfs #{File.join(current_path, '/config/nginx.conf')} /etc/nginx/conf.d/#{application.downcase}.conf"
+        surun "ln -nfs #{File.join(current_path, '/config/nginx.conf')} /etc/nginx/conf.d/#{application.downcase}_#{stage}.conf"
       end
       after "deploy:setup", "nginx:setup"
 
