@@ -12,7 +12,7 @@ module Capistrano
 
     def surun(command)
       run("su - -c '#{command}'") do |channel, stream, data|
-        if data =~ /\bpassword.*:/i
+        if data =~ /\b(password|wachtwoord).*:/i
           password = fetch(:root_password, Capistrano::CLI.password_prompt("Root password required!: "))
           channel.send_data("#{password}\n")
         else
