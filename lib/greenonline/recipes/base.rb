@@ -22,7 +22,7 @@ module Capistrano
     end
 
     set_default(:bundle_flags) { "--deployment --quiet --binstubs" }
-    set_default(:bundle_cmd)   { "#{current_release}/bin/bundle" }
+    set_default(:bundle_cmd)   { "bundle" }
     set_default(:stage)        { "production" }
 
   end
