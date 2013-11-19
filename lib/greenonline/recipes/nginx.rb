@@ -1,6 +1,10 @@
 module Capistrano
   Configuration.instance(true).load do
     set_default(:nginx_server_name, nil)
+    set_default(:nginx_ssl_enabled, false)
+    set_default(:nginx_ssl_path, '/etc/ssl/')
+    set_default(:nginx_ssl_key, nil)
+    set_default(:nginx_ssl_certificate, nil)
 
     namespace :nginx do
       desc "update latest nginx configuration"
