@@ -20,8 +20,8 @@ server {
     add_header Cache-Control public;
   }
 
-  if (-f $document_root/maintenance.html) {
-    rewrite  ^(.*)$  /maintenance.html last;
+  if (-f $document_root/system/maintenance.html) {
+    rewrite  ^(.*)$  /system/maintenance.html last;
     break;
   }
 
@@ -71,8 +71,8 @@ server {
     add_header Cache-Control public;
   }
 
-  if (-f $document_root/maintenance.html) {
-    rewrite  ^(.*)$  /maintenance.html last;
+  if (-f $document_root/system/maintenance.html) {
+    rewrite  ^(.*)$  /system/maintenance.html last;
     break;
   }
 
