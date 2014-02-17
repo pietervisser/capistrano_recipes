@@ -5,6 +5,12 @@ module Capistrano
     set_default(:nginx_ssl_path, '/etc/ssl/')
     set_default(:nginx_ssl_key, nil)
     set_default(:nginx_ssl_certificate, nil)
+    set_default(:nginx_config_path, '/etc/nginx/conf.d/')
+
+    set_default(:nginx_wordpress_enabled, false)
+    set_default(:nginx_wordpress_root, nil)
+    set_default(:nginx_wordpress_url, 'blog')
+    set_default(:nginx_wordpress_w3tc_enabled, false)
 
     namespace :nginx do
       desc "update latest nginx configuration"

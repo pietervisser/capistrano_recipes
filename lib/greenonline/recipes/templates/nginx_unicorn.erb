@@ -20,6 +20,77 @@ server {
     add_header Cache-Control public;
   }
 
+  <% if nginx_wordpress_enabled %>
+
+    location /<%= nginx_wordpress_url %> {
+    root <%= nginx_wordpress_root %>;
+    index index.php;
+
+    <% if nginx_wordpress_w3tc_enabled %>
+
+      # BEGIN W3TC Page Cache cache
+      location ~ /<%= nginx_wordpress_url %>/wp-content/cache/page_enhanced.*html$ {
+        add_header Vary "Accept-Encoding, Cookie";
+      }
+      location ~ /<%= nginx_wordpress_url %>/wp-content/cache/page_enhanced.*gzip$ {
+        gzip off;
+        types {}
+        default_type text/html;
+        add_header Vary "Accept-Encoding, Cookie";
+        add_header Content-Encoding gzip;
+      }
+      # END W3TC Page Cache cache
+
+      # BEGIN W3TC Page Cache core
+      rewrite ^(.*\/)?w3tc_rewrite_test/?$ $1?w3tc_rewrite_test=1 last;
+      set $cache_uri $request_uri;
+
+      # POST requests and urls with a query string should always go to PHP
+      if ($request_method = POST) {
+        set $cache_uri 'null cache';
+      }
+      if ($query_string != "") {
+        set $cache_uri 'null cache';
+      }
+
+      try_files /<%= nginx_wordpress_url %>/wp-content/cache/page_enhanced/${host}${cache_uri}_index.html $uri $uri/ /<%= nginx_wordpress_url %>/index.php?$args;
+    <% else %>
+      try_files $uri $uri/ /<%= nginx_wordpress_url %>/index.php?$args;
+    <% end %>
+
+    location = /<%= nginx_wordpress_url %>/favicon.ico {
+      log_not_found off;
+      access_log off;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+      expires max;
+      access_log off;
+      log_not_found off;
+    }
+
+    # Pass all .php files onto a php-fpm/php-fcgi server.
+    location ~ \.php$ {
+      # Zero-day exploit defense.
+      # http://forum.nginx.org/read.php?2,88845,page=3
+      # Won't work properly (404 error) if the file is not stored on this server, which is entirely possible with php-fpm/php-fcgi.
+      # Comment the 'try_files' line out if you set up php-fpm/php-fcgi on another machine.  And then cross your fingers that you won't get hacked.
+      try_files $uri =404;
+
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+
+      include fastcgi_params;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      # fastcgi_intercept_errors on;
+      fastcgi_pass 127.0.0.1:9000;
+    }
+
+  }
+
+  <% end %>
+
   if (-f $document_root/system/maintenance.html) {
     rewrite  ^(.*)$  /system/maintenance.html last;
     break;
