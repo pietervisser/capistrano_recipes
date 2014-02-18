@@ -4,6 +4,7 @@ module Capistrano
     set_default(:nginx_ssl_enabled, false)
     set_default(:nginx_ssl_path, '/etc/ssl/')
     set_default(:nginx_ssl_key, nil)
+    set_default(:nginx_ssl_ip, nil)
     set_default(:nginx_ssl_certificate, nil)
     set_default(:nginx_config_path, '/etc/nginx/conf.d/')
 

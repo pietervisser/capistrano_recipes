@@ -125,7 +125,7 @@ server {
 
 <% if nginx_ssl_enabled %>
 server {
-  listen 443;
+  listen <%= nginx_ssl_ip ? "#{nginx_ssl_ip}:" : '' %>443;
 
   ssl on;
   ssl_certificate <%= nginx_ssl_path %><%= nginx_ssl_certificate %>;
