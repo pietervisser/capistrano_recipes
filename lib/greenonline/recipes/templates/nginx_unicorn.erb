@@ -118,7 +118,7 @@ server {
     proxy_pass http://unicorn_<%= application.downcase %>_<%= stage %>;
   }
 
-  error_page 500 502 503 504 /500.html;
+  error_page 500 502 503 504 <%= error_500_path ? error_500_path : '/500.html' %>;
   client_max_body_size 4G;
   keepalive_timeout 10;
 }
@@ -170,8 +170,8 @@ server {
     proxy_pass http://unicorn_<%= application.downcase %>_<%= stage %>;
   }
 
-  error_page 500 502 503 504 /500.html;
+  error_page 500 502 503 504 <%= error_500_path ? error_500_path : '/500.html' %>;
   client_max_body_size 4G;
-  keepalive_timeout 10;
+  keepalive_timeout 70;
 }
 <% end %>

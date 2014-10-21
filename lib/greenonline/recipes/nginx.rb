@@ -7,6 +7,7 @@ module Capistrano
     set_default(:nginx_ssl_ip, nil)
     set_default(:nginx_ssl_certificate, nil)
     set_default(:nginx_config_path, '/etc/nginx/conf.d/')
+    set_default(:error_500_path, '/500.html')
 
     set_default(:nginx_wordpress_enabled, false)
     set_default(:nginx_wordpress_root, nil)
