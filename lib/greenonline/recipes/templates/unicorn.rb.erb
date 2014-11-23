@@ -7,7 +7,7 @@ stdout_path "<%= unicorn_log %>"
 
 listen "/tmp/unicorn.<%= application.downcase %>.<%= stage %>.sock"
 worker_processes <%= unicorn_workers %>
-timeout 30
+timeout <%= unicorn_timeout %>
 
 # Load rails+github.git into the master before forking workers
 # for super-fast worker spawn times

@@ -7,6 +7,7 @@ module Capistrano
     set_default(:unicorn_log)     { "#{current_path}/log/unicorn.log" }
     set_default(:unicorn_dependencies) { "" }
     set_default(:unicorn_workers) { 2 }
+    set_default(:unicorn_timeout) { 30 }
 
 
     namespace :unicorn do
