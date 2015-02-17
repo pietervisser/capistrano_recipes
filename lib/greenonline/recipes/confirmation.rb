@@ -2,7 +2,7 @@ module Capistrano
   Configuration.instance(true).load do
     set_default(:ask_confirmation?, false)
 
-    before :deploy, :deploy_confirmation
+    before 'deploy:update_code', :deploy_confirmation
     task :deploy_confirmation do
       next if !ask_confirmation?
       set :confirmed, proc {
